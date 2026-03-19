@@ -1,0 +1,13 @@
+{
+    "folders": [
+        {
+            "path": "be",
+        },
+        {
+            "path": "fe",
+        },
+    ],
+    "settings": {
+        "java.compile.nullAnalysis.mode": "automatic",
+    },
+}

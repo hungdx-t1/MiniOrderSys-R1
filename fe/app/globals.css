@@ -1,0 +1,91 @@
+@import "tailwindcss";
+
+:root {
+  --paper: #f8f2e8;
+  --paper-strong: #f0e3ce;
+  --ink: #2f241c;
+  --ink-soft: #6f5a47;
+  --brand: #b24e26;
+  --brand-strong: #8e3411;
+  --mint: #2f8d7f;
+  --card: rgba(255, 255, 255, 0.88);
+  --border-soft: rgba(122, 85, 55, 0.22);
+  --card-shadow: 0 20px 50px rgba(77, 49, 28, 0.16);
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-paper-strong: var(--paper-strong);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-mint: var(--mint);
+  --color-card: var(--card);
+  --color-border-soft: var(--border-soft);
+  --font-sans: var(--font-manrope);
+  --font-display: var(--font-sora);
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-manrope), "Segoe UI", sans-serif;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(247, 167, 111, 0.45), transparent 33%),
+    radial-gradient(circle at 90% 8%, rgba(87, 186, 167, 0.25), transparent 28%),
+    linear-gradient(170deg, #fff9ef 0%, #f8f0e0 58%, #f0e3ce 100%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+.app-shell {
+  width: min(100%, 30rem);
+  margin-inline: auto;
+}
+
+.glass-card {
+  border: 1px solid var(--border-soft);
+  background: linear-gradient(145deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(255, 251, 244, 0.78));
+  box-shadow: var(--card-shadow);
+  backdrop-filter: blur(8px);
+}
+
+.fade-up {
+  animation: fade-up 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pattern-burst {
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(178, 78, 38, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(47, 141, 127, 0.1), transparent 28%);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade-up {
+    animation: none;
+  }
+}
