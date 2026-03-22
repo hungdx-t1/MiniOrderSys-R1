@@ -4,7 +4,7 @@ import {
   getAuthTokenFromRequest,
   proxyToBackend,
   readJsonRequestBody,
-} from "@/app/_lib/backend";
+} from "@/lib/backend";
 
 function missingTokenResponse() {
   return NextResponse.json(

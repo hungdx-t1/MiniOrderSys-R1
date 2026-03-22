@@ -1,9 +1,9 @@
-import MobileOrderApp from "@/app/_components/mobile-order-app";
+import OrderApp from "@/components/order/order-app";
 
 export default function Home() {
   return (
-    <main className="app-shell flex flex-1 flex-col px-4 pb-14 pt-6 sm:px-6 sm:pt-8">
-      <MobileOrderApp />
-    </main>
+    <div className="flex flex-col min-h-screen bg-transparent">
+       <OrderApp />
+    </div>
   );
 }

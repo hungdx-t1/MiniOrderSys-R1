@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { getAuthTokenFromRequest, proxyToBackend } from "@/app/_lib/backend";
+import { getAuthTokenFromRequest, proxyToBackend } from "@/lib/backend";
 
 export async function POST(request: Request) {
   const token = getAuthTokenFromRequest(request);

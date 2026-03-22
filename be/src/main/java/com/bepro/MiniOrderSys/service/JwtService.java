@@ -9,19 +9,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
 import javax.crypto.SecretKey;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.bepro.MiniOrderSys.config.AppProperties;
+
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class JwtService {
 
-  @Value("${app.jwt.secret}")
-  private String jwtSecret;
-
-  @Value("${app.jwt.expiration-ms}")
-  private long jwtExpirationMs;
+  private final AppProperties appProperties;
 
   public String generateToken(UserDetails userDetails) {
     Instant now = Instant.now();
@@ -30,7 +30,7 @@ public class JwtService {
         .subject(userDetails.getUsername())
         .claim("roles", extractRoles(userDetails))
         .issuedAt(Date.from(now))
-        .expiration(Date.from(now.plusMillis(jwtExpirationMs)))
+        .expiration(Date.from(now.plusMillis(appProperties.getJwt().getExpirationMs())))
         .signWith(getSigningKey())
         .compact();
   }
@@ -62,7 +62,7 @@ public class JwtService {
   }
 
   private SecretKey getSigningKey() {
-    return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+    return Keys.hmacShaKeyFor(appProperties.getJwt().getSecret().getBytes(StandardCharsets.UTF_8));
   }
 
   private List<String> extractRoles(UserDetails userDetails) {

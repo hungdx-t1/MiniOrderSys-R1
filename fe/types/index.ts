@@ -53,6 +53,7 @@ export interface OrderCreatePayload {
   tableNumber: string;
   items: OrderItemPayload[];
   voucherCode?: string;
+  paymentMethod: 'CASH' | 'VNPAY';
 }
 
 export interface OrderItemResponse {
@@ -73,6 +74,25 @@ export interface OrderResponse {
   discountAmount: number | null;
   createdAt: string;
   items: OrderItemResponse[];
+}
+
+export interface InvoiceResponse {
+  id: number;
+  orderId: number;
+  tableNumber: string;
+  totalAmount: number;
+  paymentMethod: 'CASH' | 'TRANSFER' | 'VNPAY';
+  paymentStatus: 'PENDING' | 'COMPLETED' | 'CANCELLED';
+  paidAt: string | null;
+  createdAt: string;
+  paymentUrl: string | null;
+}
+
+export interface TableResponse {
+  id: number;
+  tableNumber: string;
+  capacity: number;
+  status: string;
 }
 
 export interface ApiError {
