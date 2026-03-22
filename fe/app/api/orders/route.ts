@@ -4,7 +4,7 @@ import {
   getAuthTokenFromRequest,
   proxyToBackend,
   readJsonRequestBody,
-} from "@/app/_lib/backend";
+} from "@/lib/backend";
 
 export async function POST(request: Request) {
   const body = await readJsonRequestBody(request);

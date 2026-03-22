@@ -1,4 +1,7 @@
 spring:
+    output:
+        ansi:
+            enabled: ALWAYS
     application:
         name: MiniOrderSys
     datasource:
@@ -15,7 +18,21 @@ spring:
             enabled: true
             path: /h2-console
 
+logging:
+  level:
+    root: INFO
+    "[com.bepro.MiniOrderSys]": DEBUG
+  pattern:
+    console: "%clr(%d{HH:mm:ss.SSS}){yellow} %clr(%-5level) %clr([%15.15t]){magenta} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+
 app:
     jwt:
         secret: NHAT_TRUONG_DEP_TRAI_VO_DICH_VU_TRU_SIEU_CAP_VIP_PRO_MAX_GALAXY_ULTRA_PLUS_PLUS
         expiration-ms: 86400000
+    vnpay:
+        tmnCode: ${VNPAY_TMN_CODE}
+        hashSecret: ${VNPAY_HASH_SECRET}
+        url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+        returnUrl: ${VNPAY_RETURN_URL}
+        version: 2.1.0
+        command: pay

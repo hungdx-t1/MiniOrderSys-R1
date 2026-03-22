@@ -34,7 +34,7 @@ public class SecurityConfig {
         .headers(headers -> headers.frameOptions(frameOptions -> frameOptions.sameOrigin()))
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/auth/**", "/h2-console/**", "/api/products/**", "/api/orders/**", "/api/tables/**")
+            .requestMatchers("/api/auth/**", "/h2-console/**", "/api/products/**", "/api/orders/**", "/api/tables/**", "/api/invoices/**", "/api/vnpay/**", "/ws/**")
             .permitAll()
             .requestMatchers("/api/admin/**").hasRole(Role.ADMIN.name())
             .requestMatchers("/api/vouchers/**").authenticated()

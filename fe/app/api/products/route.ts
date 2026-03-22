@@ -1,4 +1,4 @@
-import { proxyToBackend } from "@/app/_lib/backend";
+import { proxyToBackend } from "@/lib/backend";
 
 export async function GET() {
   return proxyToBackend({

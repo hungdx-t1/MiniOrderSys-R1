@@ -1,5 +1,9 @@
-import AdminDashboard from "@/app/_components/admin-dashboard";
+import AdminDashboard from "./_components/admin-dashboard";
 
 export default function AdminPage() {
-  return <AdminDashboard />;
+  return (
+    <div className="min-h-screen bg-slate-50/50">
+       <AdminDashboard />
+    </div>
+  );
 }

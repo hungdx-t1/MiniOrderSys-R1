@@ -18,4 +18,6 @@ public interface CafeOrderRepository extends JpaRepository<CafeOrder, Long> {
   long countByTableTableNumberIgnoreCaseAndStatus(String tableNumber, OrderStatus status);
 
   Optional<CafeOrder> findTopByTableAndStatusOrderByCreatedAtDesc(CafeTable table, OrderStatus status);
+
+  List<CafeOrder> findByOrderedByOrderByCreatedAtDesc(String orderedBy);
 }

@@ -35,9 +35,11 @@ import com.bepro.MiniOrderSys.repository.UserVoucherRepository;
 import com.bepro.MiniOrderSys.repository.VoucherRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class OrderService {
 
   final CafeOrderRepository cafeOrderRepository;
@@ -196,6 +198,20 @@ public class OrderService {
     return cafeOrderRepository.findAllByOrderByCreatedAt().stream()
         .map(this::toResponse)
         .toList();
+  }
+
+  @Transactional(readOnly = true)
+  public List<OrderResponse> getUserOrders(String username) {
+    log.info("Fetching orders for user: {}", username);
+    if (username == null) {
+      log.warn("Username is null, returning empty list for history");
+      return List.of();
+    }
+    List<OrderResponse> orders = cafeOrderRepository.findByOrderedByOrderByCreatedAtDesc(username).stream()
+        .map(this::toResponse)
+        .toList();
+    log.info("Found {} orders for user: {}", orders.size(), username);
+    return orders;
   }
 
   @Transactional(readOnly = true)

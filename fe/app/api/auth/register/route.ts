@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-import { proxyToBackend, readJsonRequestBody } from "@/app/_lib/backend";
+import { proxyToBackend, readJsonRequestBody } from "@/lib/backend";
 
 export async function POST(request: Request) {
   const body = await readJsonRequestBody(request);
