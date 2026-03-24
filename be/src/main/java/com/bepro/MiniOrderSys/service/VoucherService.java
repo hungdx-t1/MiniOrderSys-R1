@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.bepro.MiniOrderSys.dto.response.UserVoucherResponse;
 import com.bepro.MiniOrderSys.entity.AppUser;
 import com.bepro.MiniOrderSys.entity.UserVoucher;
 import com.bepro.MiniOrderSys.entity.Voucher;
@@ -31,6 +32,30 @@ public class VoucherService {
   private final UserVoucherRepository userVoucherRepo;
   private final UserRepository userRepo;
 
+  private UserVoucherResponse toUserVoucherResponse(UserVoucher userVoucher) {
+    Voucher voucher = userVoucher.getVoucher();
+    return new UserVoucherResponse(
+        userVoucher.getId(),
+        voucher.getCode(),
+        voucher.getName(),
+        voucher.getDescription(),
+        voucher.getDiscountPercent(),
+        voucher.getActive(),
+        userVoucher.getUsed(),
+        userVoucher.getAssignedAt(),
+        userVoucher.getUsedAt());
+  }
+
+  @Transactional(readOnly = true)
+  public List<UserVoucherResponse> getMyVouchers(String username) {
+    userRepo.findByUsername(username)
+        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+    return userVoucherRepo.findAllByUserUsernameOrderByAssignedAtDesc(username).stream()
+        .map(this::toUserVoucherResponse)
+        .toList();
+  }
+
   @Transactional
   public Map<String, Object> drawVoucher(String username) {
 
@@ -42,7 +67,8 @@ public class VoucherService {
     Predicate<AppUser> alreadyDrawn = u -> userVoucherRepo.existsByUser(u);
 
     if (alreadyDrawn.test(user)) {
-      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Á à! M có voucher rồi còn muốn lấy thêm à? Cút ngayyy!");
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+          "Á à! M có voucher rồi còn muốn lấy thêm à? Cút ngayyy!");
     }
 
     // Supplier - lay danh sach voucher kha dung
@@ -75,7 +101,6 @@ public class VoucherService {
         "message", "Chuc mung! Ban da rut duoc voucher!",
         "code", picked.getCode(),
         "name", picked.getName(),
-        "discountPercent", picked.getDiscountPercent() + "%"
-    );
+        "discountPercent", picked.getDiscountPercent() + "%");
   }
 }

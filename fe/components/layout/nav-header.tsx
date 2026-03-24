@@ -25,7 +25,7 @@ export default function NavHeader() {
   if (!hasHydrated) return null;
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6">
         <div className="flex items-center gap-2">
           <Link href="/" className="flex items-center gap-2">
@@ -39,9 +39,9 @@ export default function NavHeader() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-4">
-          <Button 
-            variant="ghost" 
-            size="icon-sm" 
+          <Button
+            variant="ghost"
+            size="icon-sm"
             className="relative rounded-full hover:bg-primary/10 hover:text-primary transition-colors"
             onClick={() => setIsCartOpen(true)}
           >
@@ -54,7 +54,7 @@ export default function NavHeader() {
           </Button>
 
           <div className="h-4 w-px bg-border hidden sm:block" />
-          
+
           {isLoggedIn ? (
             <div className="flex items-center gap-3">
               {user?.role === "ADMIN" && (
@@ -65,7 +65,7 @@ export default function NavHeader() {
                   </Button>
                 </Link>
               )}
-              
+
               <DropdownMenu>
                 <DropdownMenuTrigger
                   render={
@@ -73,7 +73,7 @@ export default function NavHeader() {
                       <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/10 text-primary">
                         <User className="h-4 w-4" />
                       </div>
-                      <span className="max-w-[100px] truncate text-sm font-semibold hidden sm:inline-block">
+                      <span className="hidden max-w-25 truncate text-sm font-semibold sm:inline-block">
                         {user?.username}
                       </span>
                       <ChevronDown className="h-3 w-3 opacity-50 hidden sm:block" />
@@ -111,7 +111,7 @@ export default function NavHeader() {
                   </Link>
 
                   <DropdownMenuSeparator />
-                  
+
                   <DropdownMenuItem className="cursor-pointer rounded-lg text-rose-600 focus:bg-rose-50 focus:text-rose-600 font-bold" onClick={logout}>
                     <LogOut className="mr-2 h-4 w-4" />
                     <span>Đăng xuất</span>
@@ -120,14 +120,23 @@ export default function NavHeader() {
               </DropdownMenu>
             </div>
           ) : (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <Link href="/login">
-                <Button size="sm" variant="ghost" className="hidden sm:inline-flex">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-8 rounded-full border-2 border-border px-3 text-xs font-semibold bg-background hover:bg-muted sm:h-9 sm:px-3.5"
+                >
                   Đăng nhập
                 </Button>
               </Link>
+              <span className="text-xs font-semibold text-muted-foreground/80">/</span>
               <Link href="/register">
-                <Button size="sm">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-8 rounded-full border-2 border-primary/40 bg-primary/5 px-3 text-xs font-bold text-primary hover:bg-primary/10 sm:h-9 sm:px-3.5"
+                >
                   Đăng ký
                 </Button>
               </Link>
