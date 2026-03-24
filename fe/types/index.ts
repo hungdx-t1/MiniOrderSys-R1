@@ -27,6 +27,18 @@ export interface VoucherDrawResponse {
   discountPercent?: string;
 }
 
+export interface UserVoucher {
+  id: number;
+  code: string;
+  name: string;
+  description: string;
+  discountPercent: number;
+  active: boolean;
+  used: boolean;
+  assignedAt: string;
+  usedAt: string | null;
+}
+
 export interface AdminVoucher {
   id: number;
   code: string;

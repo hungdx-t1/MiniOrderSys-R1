@@ -19,11 +19,11 @@ spring:
             path: /h2-console
 
 logging:
-  level:
-    root: INFO
-    "[com.bepro.MiniOrderSys]": DEBUG
-  pattern:
-    console: "%clr(%d{HH:mm:ss.SSS}){yellow} %clr(%-5level) %clr([%15.15t]){magenta} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
+    level:
+        root: INFO
+        "[com.bepro.MiniOrderSys]": DEBUG
+    pattern:
+        console: "%clr(%d{HH:mm:ss.SSS}){yellow} %clr(%-5level) %clr([%15.15t]){magenta} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"
 
 app:
     jwt:

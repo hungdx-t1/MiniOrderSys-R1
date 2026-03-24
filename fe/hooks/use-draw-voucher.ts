@@ -32,8 +32,12 @@ export function useDrawVoucher(onSuccess?: (code: string) => void) {
       if (payload.code && onSuccess) {
         onSuccess(payload.code);
       }
-      setVoucherFeedback(payload.message || "Rút voucher thành công.");
-      toast.success("Rút voucher thành công!");
+      const detailParts = [payload.code, payload.discountPercent].filter(Boolean);
+      const detailText = detailParts.length > 0 ? ` (${detailParts.join(" - ")})` : "";
+      const successMessage = `${payload.message || "Rút voucher thành công."}${detailText}`;
+
+      setVoucherFeedback(successMessage);
+      toast.success(successMessage);
     } catch {
       toast.error("Lỗi kết nối API voucher.");
     } finally {

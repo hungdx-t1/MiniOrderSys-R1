@@ -1,5 +1,6 @@
 package com.bepro.MiniOrderSys.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,4 +14,6 @@ public interface UserVoucherRepository extends JpaRepository<UserVoucher, Long> 
   boolean existsByUser(AppUser user);
 
   Optional<UserVoucher> findByUserAndVoucher(AppUser user, Voucher voucher);
+
+  List<UserVoucher> findAllByUserUsernameOrderByAssignedAtDesc(String username);
 }
