@@ -5,6 +5,7 @@ import { formatVnd } from "@/lib/utils";
 import { 
   Loader2, 
   CheckCircle2, 
+  XCircle,
   Clock, 
   CreditCard, 
   Banknote, 
@@ -141,7 +142,10 @@ export default function OrderManagement({ token }: OrderManagementProps) {
                   {isProcessing === inv.id ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : (
-                    "Từ chối"
+                    <>
+                      <XCircle className="h-4 w-4" />
+                      Từ chối
+                    </>
                   )}
                 </Button>
               </div>

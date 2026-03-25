@@ -25,8 +25,12 @@ export const useInvoices = (token: string | undefined) => {
       if (!resp.ok) throw new Error(extractErrorMessage(data, 'Lỗi tải hóa đơn'));
 
       const activeInvoices = data
-        .filter((inv: InvoiceResponse) => inv.paymentStatus !== 'COMPLETED')
-        .sort((a: any, b: any) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+        .filter((inv: InvoiceResponse) => 
+          inv.id && 
+          inv.paymentStatus !== 'COMPLETED' && 
+          inv.paymentStatus !== 'CANCELLED'
+        )
+        .sort((a: InvoiceResponse, b: InvoiceResponse) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
       setInvoices(activeInvoices);
     } catch (err: any) {
@@ -42,10 +46,11 @@ export const useInvoices = (token: string | undefined) => {
     socketRef.current.connect(
       SOCKET_CONFIG.TOPICS.ADMIN_ORDERS,
       (newInvoice: InvoiceResponse) => {
+        if (!newInvoice.id || !newInvoice.tableNumber) return;
+
         setInvoices(prev => {
           const isExist = prev.some(inv => inv.id === newInvoice.id);
-          
-          if (newInvoice.paymentStatus === 'COMPLETED') {
+          if (newInvoice.paymentStatus === 'COMPLETED' || newInvoice.paymentStatus === 'CANCELLED') {
             return prev.filter(inv => inv.id !== newInvoice.id);
           }
           

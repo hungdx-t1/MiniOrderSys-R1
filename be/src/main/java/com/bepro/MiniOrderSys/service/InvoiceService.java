@@ -111,6 +111,7 @@ public class InvoiceService {
     }
 
     String paymentUrl = null;
+    log.info("Checking payment method: [requested:{}, enum:VNPAY]", request.paymentMethod());
     if (request.paymentMethod() == PaymentMethod.VNPAY && request.paymentStatus() != PaymentStatus.COMPLETED) {
       try {
         log.info("Requesting VNPay payment URL generation [invoiceId:{}]", savedInvoice.getId());
@@ -119,6 +120,8 @@ public class InvoiceService {
       } catch (Exception e) {
         log.error("Failed to generate VNPay payment URL [invoiceId:{}]", savedInvoice.getId(), e);
       }
+    } else {
+      log.info("Skipping VNPay URL generation for non-VNPAY method: {}", request.paymentMethod());
     }
 
     InvoiceResponse response = toResponse(savedInvoice, paymentUrl);
