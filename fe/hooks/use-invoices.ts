@@ -90,12 +90,35 @@ export const useInvoices = (token: string | undefined) => {
     }
   };
 
+  const handleReject = async (invoiceId: number) => {
+    if (!token) return;
+    if (!confirm('Bạn có chắc chắn muốn từ chối hóa đơn này? Hủy thanh toán và giải phóng bàn.')) return;
+    
+    setIsProcessing(invoiceId);
+    try {
+      const resp = await fetch(`/api/admin/invoices/${invoiceId}/reject`, {
+        method: 'PUT',
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(extractErrorMessage(data, 'Lỗi từ chối thanh toán'));
+
+      toast.success(`Đã từ chối hóa đơn #${invoiceId}`);
+      setInvoices(prev => prev.filter(inv => inv.id !== invoiceId));
+    } catch (err: any) {
+      toast.error(err.message);
+    } finally {
+      setIsProcessing(null);
+    }
+  };
+
   return {
     invoices,
     isLoading,
     isProcessing,
     isConnected,
     fetchInvoices,
-    handleComplete
+    handleComplete,
+    handleReject
   };
 };
